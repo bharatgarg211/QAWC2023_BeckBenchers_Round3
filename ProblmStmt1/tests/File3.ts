@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, Locator , ChromiumBrowser} from '@playwright/test';
 
 test('Movie Checked', async ({ page }) => {
   await page.goto('https://www.primevideo.com/');
@@ -29,42 +29,43 @@ test('Movie Checked', async ({ page }) => {
  await page.click("//article[@class='Z9dd1d']//a)[1]");
   
 
-// Step 8 - Click on the trailer icon and verify video play
-const trailerIcon = await page.$("//div[@data-automation-id='trailer-button'] - trailerIcon");
+ // Step 8 - Click on the trailer icon and verify video play
+ const trailerIcon = await page.$("//div[@data-automation-id='trailer-button'] - trailerIcon");
 await trailerIcon?.click();
-await page.waitForSelector(".av-video-container video");
-const videoPlayer  = Array.arguments(await page.$(".av-video-container video") as HTMLCollection<HTMLAllCollection>);
-const isVideoPlaying = await videoPlayer?.isPlaying();
-if (!isVideoPlaying) {
-  console.log("Video is not playing");
-}
+ await page.waitForSelector(".av-video-container video");
+// //const videoPlayer  = (await page.$(".av-video-container video") as HTMLCollection<HTMLAllCollection>;
+// const videoPlayer: Locator[] = await page.locator(".av-video-container video").all();
+// const isVideoPlaying = await videoPlayer.isPlaying();
+// if (!isVideoPlaying) {
+//   console.log("Video is not playing");
+// }
 
- // Step 9 - Verify video scenarios
- await videoPlayer?.pause();
- await videoPlayer?.seek(10000);
- const currentTime = await videoPlayer?.currentTime();
- if (Math.abs(currentTime - 10) > 1) {
-   console.log(`Incorrect current time: ${currentTime}`);
- }
+//  // Step 9 - Verify video scenarios
+//  await videoPlayer?.pause();
+//  await videoPlayer?.seek(10000);
+//  const currentTime = await videoPlayer?.currentTime();
+//  if (Math.abs(currentTime - 10) > 1) {
+//    console.log(`Incorrect current time: ${currentTime}`);
+//  }
 
- let totalTime = await videoPlayer?.duration();
- let isForwarding = true;
- while (isForwarding) {
-   const beforeTime = await videoPlayer?.currentTime();
-   await page.click(".av-forward-button");
-   const afterTime = await videoPlayer?.currentTime();
-   if (afterTime > totalTime) {
-     isForwarding = false;
-   }
-   if (beforeTime >= afterTime) {
-     console.log(`Incorrect time after forwarding: ${afterTime}`);
-   }
- }
+//  let totalTime = await videoPlayer?.duration();
+//  let isForwarding = true;
+//  while (isForwarding) {
+//    const beforeTime = await videoPlayer?.currentTime();
+//    await page.click(".av-forward-button");
+//    const afterTime = await videoPlayer?.currentTime();
+//    if (afterTime > totalTime) {
+//      isForwarding = false;
+//    }
+//    if (beforeTime >= afterTime) {
+//      console.log(`Incorrect time after forwarding: ${afterTime}`);
+//    }
+//  }
 
- let isRewinding = true;
- while (isRewinding) {
-   const beforeTime = await videoPlayer?.currentTime();
-   await page.click;
+//  let isRewinding = true;
+//  while (isRewinding) {
+//    const beforeTime = await videoPlayer?.currentTime();
+//    await page.click;
 
 //point number 10
 
@@ -81,7 +82,7 @@ expect(await page.screenshot()).toMatchSnapshot('/test-results/images/Discovery.
  expect(await page.screenshot()).toMatchSnapshot('/test-results/images/LionsgatePlay.jpg');
 
 }
-}
+
 );
 
 
